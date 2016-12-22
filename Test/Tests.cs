@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 namespace Tests
 {
-    public class Tests
-    {
-        [Fact]
-        public void IndentCheck() 
-        {
+	public class Tests
+	{
+		[Fact]
+		public void IndentCheck()
+		{
 			IngressGenerator access = new IngressGenerator();
 			string testIndent = access.FixIndention(0, "hello!");
 			string testIndentOne = access.FixIndention(1, "hello!");
@@ -39,14 +39,8 @@ namespace Tests
 			Assert.Equal(ingress[11], "          serviceName: test-svc");
 			Assert.Equal(ingress[12], "          servicePort: 80");
 		}
-    }
+	}
 }
-
-
-
-
-
-
 
 
 

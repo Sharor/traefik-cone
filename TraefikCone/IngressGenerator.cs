@@ -9,8 +9,8 @@ namespace TraefikCone
 	/// <summary>
 	/// This class is responsible for writing out a file that represents an ingress in a træfik cluster, when prompted from a pipeline. 
 	/// </summary>
-    public class IngressGenerator
-    {
+	public class IngressGenerator
+	{
 		/// <summary>
 		/// Ensures proper indention of methods in the yml. 
 		/// </summary>
@@ -40,7 +40,7 @@ namespace TraefikCone
 			using (StreamWriter file = new StreamWriter(fileStream))
 			{
 				foreach (string line in fileStructure)
-					file.WriteLine(line); 
+					file.WriteLine(line);
 			}
 		}
 
@@ -63,7 +63,7 @@ namespace TraefikCone
 			ingress = WriteIngressMetadata(ingress, ingressName);
 			ingress = WriteIngressSpec(ingress, host, svcName);
 
-			return ingress; 
+			return ingress;
 		}
 
 		/// <summary>
@@ -81,7 +81,7 @@ namespace TraefikCone
 			file.Add("kind: Ingress");
 			file.Add("metadata:");
 			file.Add(FixIndention(1, string.Format("name: {0}", ingressName)));
-			return file; 
+			return file;
 		}
 
 		/// <summary>
@@ -110,7 +110,7 @@ namespace TraefikCone
 			file.Add(FixIndention(4, "backend:"));
 			file.Add(FixIndention(5, string.Format("serviceName: {0}", serviceName)));
 			file.Add(FixIndention(5, "servicePort: 80"));
-			return file; 
+			return file;
 		}
 	}
 }
