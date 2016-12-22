@@ -53,7 +53,7 @@ namespace TraefikCone
 		/// <param name="name">Ingress name</param>
 		public List<string> CreateIngress(string name)
 		{
-			#region Conventions for ingress
+			#region Conventions for ingress - kept to allow change of convention easily 
 			string ingressName = string.Format("{0}-ing", name);
 			string host = string.Format("{0}.local", name);
 			string svcName = string.Format("{0}-svc", name);
