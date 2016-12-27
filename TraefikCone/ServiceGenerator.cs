@@ -67,9 +67,9 @@ namespace TraefikCone
 		///  
 		/// Note that the targetPort can be any chosen port, it just needs to map to the pod exposed port.
 		/// </summary>
-		/// <param name="file"></param>
-		/// <param name="hostName"></param>
-		/// <param name="serviceName"></param>
+		/// <param name="file">The structure of the file to write to, in this context its an service yml.</param>
+		/// <param name="targetPort">The pod exposed on the deployed pods.</param>
+		/// <param name="deploymentName">Name for the deployment in kubernetes.</param>
 		List<string> WriteServiceSpec(List<string> file, string targetPort, string deploymentName)
 		{
 			SharedMethods indent = new SharedMethods();

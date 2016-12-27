@@ -69,9 +69,9 @@ namespace TraefikCone
 		/// 		  servicePort: 80
 		/// 		  
 		/// </summary>
-		/// <param name="file"></param>
-		/// <param name="hostName"></param>
-		/// <param name="serviceName"></param>
+		/// <param name="file">The structure of the file to write to, in this context its an ingress yml.</param>
+		/// <param name="hostName">The address to access the cluster on, here 'name'.local.</param>
+		/// <param name="serviceName">The name of the service. This is directly dependant on the ServiceGenerator class.</param>
 		List<string> WriteIngressSpec(List<string> file, string hostName, string serviceName)
 		{
 			SharedMethods indent = new SharedMethods();
