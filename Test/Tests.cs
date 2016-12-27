@@ -9,7 +9,7 @@ namespace Tests
 		[Fact]
 		public void IndentCheck()
 		{
-			IngressGenerator access = new IngressGenerator();
+			SharedMethods access = new SharedMethods();
 			string testIndent = access.FixIndention(0, "hello!");
 			string testIndentOne = access.FixIndention(1, "hello!");
 			string testIndentTwo = access.FixIndention(2, "hello!");
@@ -38,6 +38,25 @@ namespace Tests
 			Assert.Equal(ingress[10], "        backend:");
 			Assert.Equal(ingress[11], "          serviceName: test-svc");
 			Assert.Equal(ingress[12], "          servicePort: 80");
+		}
+
+		[Fact]
+		public void ServiceCreation()
+		{
+			ServiceGenerator access = new ServiceGenerator();
+			List<string> ingress = access.CreateService("test", "5000");
+
+			Assert.Equal(ingress[0], "apiVersion: v1");
+			Assert.Equal(ingress[1], "kind: Service");
+			Assert.Equal(ingress[2], "metadata:");
+			Assert.Equal(ingress[3], "  name: test-svc");
+			Assert.Equal(ingress[4], "spec:");
+			Assert.Equal(ingress[5], "  ports:");
+			Assert.Equal(ingress[6], "    - port: 80");
+			Assert.Equal(ingress[7], "    targetPort: 5000");
+			Assert.Equal(ingress[8], "  selector:");
+			Assert.Equal(ingress[9], "    run: test-deploy");
+			Assert.Equal(ingress[10], "  type: ClusterIP");
 		}
 	}
 }

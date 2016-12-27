@@ -89,3 +89,5 @@
 --reference:C:\Users\David\.nuget\packages\System.Xml.XDocument\4.0.11\ref\netstandard1.3\System.Xml.XDocument.dll
 C:\Users\David\Source\Repos\TraefikCone\TraefikCone\IngressGenerator.cs
 C:\Users\David\Source\Repos\TraefikCone\TraefikCone\Program.cs
+C:\Users\David\Source\Repos\TraefikCone\TraefikCone\ServiceGenerator.cs
+C:\Users\David\Source\Repos\TraefikCone\TraefikCone\SharedMethods.cs
