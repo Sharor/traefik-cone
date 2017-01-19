@@ -42,12 +42,18 @@ namespace TraefikCone
 			}
 		}
 
-		public void ReadProperties(string[] properties)
+		public List<KeyValuePair<string, string>> ReadProperties(string[] properties)
 		{
+			List<KeyValuePair<string, string>> readProperties = new List<KeyValuePair<string, string>>();
+
 			for (int i = 0; i < properties.Length; i++)
 			{
-				Console.WriteLine(properties[i]);
+				readProperties.Add(new KeyValuePair<string, string>(properties[i].Split(':')[0], properties[i].Split(new[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries)[1])); 
+				Console.WriteLine(readProperties[i].Key+" was given a value of "+readProperties[i].Value);
 			}
+			Console.WriteLine("Note: if any unsupported values are used the script will fail. Please read the documentation for supported values."); 
+
+			return readProperties; 
 		}
 	}
 }

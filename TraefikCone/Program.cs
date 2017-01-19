@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using TraefikCone;
 
 namespace ConsoleApplication
 {
-    public class Program
-    {
+	public class Program
+	{
 		public static void Main(string[] args)
 		{
 			string path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName);
@@ -18,11 +20,13 @@ namespace ConsoleApplication
 
 			#region Properties
 			Console.WriteLine(string.Format("The generator assumes you put a 'properties.yml' file in the rootfolder of this project: {0}", path));
-			string[] properties = File.ReadAllLines(string.Format("{0}/{1}", path, "properties.yml"));
-			string name = properties[0];
-			string port = properties[1];
-			string replicas = properties[2];
-			string image = properties[3]; 			
+
+
+			List<KeyValuePair<string, string>> properties = access.ReadProperties(File.ReadAllLines(string.Format("{0}/{1}", path, "properties.yml")));
+			string name = properties.First(kvp => kvp.Key == "name").Value;
+			string port = properties.First(kvp => kvp.Key == "port").Value;
+			string replicas = properties.First(kvp => kvp.Key == "replicas").Value;
+			string image = properties.First(kvp => kvp.Key == "image").Value;
 			Console.WriteLine();
 			Console.WriteLine();
 			#endregion
