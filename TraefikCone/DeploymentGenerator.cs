@@ -19,37 +19,20 @@ namespace TraefikCone
 		/// </summary>
 		/// <param name="path">Path to save file</param>
 		/// <param name="name">Ingress name</param>
-		public List<string> CreateDeployment(string name, string deploymentPort)
+		public List<string> CreateDeployment(string name, string deploymentPort, string replicas, string image)
 		{
 			#region Conventions for service - this has a dependency in kubernetes to the ingress!
-			string serviceName = string.Format("{0}-svc", name);
 			string deploymentName = string.Format("{0}-deploy", name);
+			string serviceName = string.Format("{0}-svc", name);
+			
 			#endregion
 
 			List<string> deployment = new List<string>();
-			deployment = WriteDeploymentMetadata(deployment, serviceName);
-			deployment = WriteServiceSpec(deployment, deploymentPort, deploymentName);
+			deployment = WriteDeploymentMetadata(deployment, deploymentName);
+			deployment = WriteDeploymentSpec(deployment, deploymentPort, name, replicas, image);
 
 			return deployment;
 		}
-		/*
-		apiVersion: extensions/v1beta1
-		kind: Deployment
-		metadata:
-		  name: nginx-deployment
-		spec:
-		  replicas: 3
-		  template:
-			metadata:
-			  labels:
-				run: nginx
-			spec:
-			  containers:
-			  - name: nginx
-				image: nginx:1.7.9
-				ports:
-				- containerPort: 80
-		*/
 
 		/// <summary>
 		/// Writes in this format to file: 
@@ -76,28 +59,39 @@ namespace TraefikCone
 		/// Writes in this format to file: 
 		/// 
 		/// spec:
-		///   ports:
-		///     - port: 80
-		///     targetPort: 80
-		///   selector:
-		///     run: deployment-name
-		///   type: ClusterIP
-		///  
-		/// Note that the targetPort can be any chosen port, it just needs to map to the pod exposed port.
+		///   replicas: 3
+		///   template:
+		///     metadata:
+		///       labels:
+		///         run: nginx
+		///    	spec:
+		///    	  containers:
+		///    	  - name: nginx
+		///    	    image: user/image:tag
+		///    	    ports:
+		///    		- containerPort: 80 
+		///     		
 		/// </summary>
 		/// <param name="file">The structure of the file to write to, in this context its an service yml.</param>
 		/// <param name="targetPort">The pod exposed on the deployed pods.</param>
 		/// <param name="deploymentName">Name for the deployment in kubernetes.</param>
-		List<string> WriteServiceSpec(List<string> file, string targetPort, string deploymentName)
+		/// <param name="replicas">Amount of replicas to produce</param>
+		/// <param name="image">Image from hub, in the format of user/image:tag </param>
+		List<string> WriteDeploymentSpec(List<string> file, string targetPortstring, string name, string replicas, string image)
 		{
 			SharedMethods indent = new SharedMethods();
 			file.Add("spec:");
-			file.Add(indent.FixIndention(1, "ports:"));
-			file.Add(indent.FixIndention(2, "- port: 80"));
-			file.Add(indent.FixIndention(2, string.Format("targetPort: {0}", targetPort)));
-			file.Add(indent.FixIndention(1, "selector:"));
-			file.Add(indent.FixIndention(2, string.Format("run: {0}", deploymentName)));
-			file.Add(indent.FixIndention(1, "type: ClusterIP"));
+			file.Add(indent.FixIndention(1, string.Format("replicas: {0}", replicas))); 
+			file.Add(indent.FixIndention(1, "template:"));
+			file.Add(indent.FixIndention(2, "metadata:"));
+			file.Add(indent.FixIndention(3, "labels:"));
+			file.Add(indent.FixIndention(4, string.Format("run: {0}", name)));
+			file.Add(indent.FixIndention(2, "spec:"));
+			file.Add(indent.FixIndention(3, "containers:"));
+			file.Add(indent.FixIndention(3, string.Format("- name: {0}", name)));
+			file.Add(indent.FixIndention(4, string.Format("image: {0}", image)));
+			file.Add(indent.FixIndention(4, "ports:"));
+			file.Add(indent.FixIndention(4, string.Format("- containerPort: {0}", targetPortstring)));
 			return file;
 		}
 	}

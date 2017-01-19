@@ -61,11 +61,11 @@ namespace Tests
 		public void DeploymentCreation()
 		{
 			DeploymentGenerator access = new DeploymentGenerator();
-			List<string> deployment = access.CreateDeployment("", "");
+			List<string> deployment = access.CreateDeployment("test", "5000", "3", "test/test:1.0.0");
 			Assert.Equal(deployment[0], "apiVersion: extensions/v1beta1");
 			Assert.Equal(deployment[1], "kind: Deployment");
 			Assert.Equal(deployment[2], "metadata:");
-			Assert.Equal(deployment[3], "  name: nginx-deployment");
+			Assert.Equal(deployment[3], "  name: test-deploy");
 			Assert.Equal(deployment[4], "spec:");
 			Assert.Equal(deployment[5], "  replicas: 3");
 			Assert.Equal(deployment[6], "  template:");
@@ -77,7 +77,7 @@ namespace Tests
 			Assert.Equal(deployment[12], "      - name: test");
 			Assert.Equal(deployment[13], "        image: test/test:1.0.0");
 			Assert.Equal(deployment[14], "        ports:");
-			Assert.Equal(deployment[14], "        - containerPort: 80:");				
+			Assert.Equal(deployment[15], "        - containerPort: 5000");				
 		}
 	}
 }
