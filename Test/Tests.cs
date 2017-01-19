@@ -24,7 +24,6 @@ namespace Tests
 		{
 			IngressGenerator access = new IngressGenerator();
 			List<string> ingress = access.CreateIngress("test");
-
 			Assert.Equal(ingress[0], "apiVersion: extensions/v1beta1");
 			Assert.Equal(ingress[1], "kind: Ingress");
 			Assert.Equal(ingress[2], "metadata:");
@@ -45,7 +44,6 @@ namespace Tests
 		{
 			ServiceGenerator access = new ServiceGenerator();
 			List<string> ingress = access.CreateService("test", "5000");
-
 			Assert.Equal(ingress[0], "apiVersion: v1");
 			Assert.Equal(ingress[1], "kind: Service");
 			Assert.Equal(ingress[2], "metadata:");
@@ -57,6 +55,29 @@ namespace Tests
 			Assert.Equal(ingress[8], "  selector:");
 			Assert.Equal(ingress[9], "    run: test-deploy");
 			Assert.Equal(ingress[10], "  type: ClusterIP");
+		}
+
+		[Fact]
+		public void DeploymentCreation()
+		{
+			DeploymentGenerator access = new DeploymentGenerator();
+			List<string> deployment = access.CreateDeployment("", "");
+			Assert.Equal(deployment[0], "apiVersion: extensions/v1beta1");
+			Assert.Equal(deployment[1], "kind: Deployment");
+			Assert.Equal(deployment[2], "metadata:");
+			Assert.Equal(deployment[3], "  name: nginx-deployment");
+			Assert.Equal(deployment[4], "spec:");
+			Assert.Equal(deployment[5], "  replicas: 3");
+			Assert.Equal(deployment[6], "  template:");
+			Assert.Equal(deployment[7], "    metadata:");
+			Assert.Equal(deployment[8], "      labels:");
+			Assert.Equal(deployment[9], "        run: test");
+			Assert.Equal(deployment[10], "    spec:");
+			Assert.Equal(deployment[11], "      containers:");
+			Assert.Equal(deployment[12], "      - name: test");
+			Assert.Equal(deployment[13], "        image: test/test:1.0.0");
+			Assert.Equal(deployment[14], "        ports:");
+			Assert.Equal(deployment[14], "        - containerPort: 80:");				
 		}
 	}
 }
