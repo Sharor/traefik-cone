@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: test-ing
+spec:
+  rules:
+  - host: test.local
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: test-svc
+          servicePort: 80

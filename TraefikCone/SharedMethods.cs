@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace TraefikCone
@@ -38,6 +39,14 @@ namespace TraefikCone
 			{
 				foreach (string line in fileStructure)
 					file.WriteLine(line);
+			}
+		}
+
+		public void ReadProperties(string[] properties)
+		{
+			for (int i = 0; i < properties.Length; i++)
+			{
+				Console.WriteLine(properties[i]);
 			}
 		}
 	}
