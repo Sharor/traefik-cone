@@ -71,7 +71,7 @@ namespace Tests
 			Assert.Equal(deployment[6], "  template:");
 			Assert.Equal(deployment[7], "    metadata:");
 			Assert.Equal(deployment[8], "      labels:");
-			Assert.Equal(deployment[9], "        run: test");
+			Assert.Equal(deployment[9], "        run: test-deploy");
 			Assert.Equal(deployment[10], "    spec:");
 			Assert.Equal(deployment[11], "      containers:");
 			Assert.Equal(deployment[12], "      - name: test");

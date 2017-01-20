@@ -29,7 +29,7 @@ namespace TraefikCone
 
 			List<string> deployment = new List<string>();
 			deployment = WriteDeploymentMetadata(deployment, deploymentName);
-			deployment = WriteDeploymentSpec(deployment, deploymentPort, name, replicas, image);
+			deployment = WriteDeploymentSpec(deployment, deploymentPort, name, replicas, image, deploymentName);
 
 			return deployment;
 		}
@@ -77,7 +77,8 @@ namespace TraefikCone
 		/// <param name="deploymentName">Name for the deployment in kubernetes.</param>
 		/// <param name="replicas">Amount of replicas to produce</param>
 		/// <param name="image">Image from hub, in the format of user/image:tag </param>
-		List<string> WriteDeploymentSpec(List<string> file, string targetPortstring, string name, string replicas, string image)
+		/// <param name="deploymentName">Name for deployment, typically name appended with something (ex name-deploy) </param>
+		List<string> WriteDeploymentSpec(List<string> file, string targetPortstring, string name, string replicas, string image, string deploymentName)
 		{
 			SharedMethods indent = new SharedMethods();
 			file.Add("spec:");
@@ -85,7 +86,7 @@ namespace TraefikCone
 			file.Add(indent.FixIndention(1, "template:"));
 			file.Add(indent.FixIndention(2, "metadata:"));
 			file.Add(indent.FixIndention(3, "labels:"));
-			file.Add(indent.FixIndention(4, string.Format("run: {0}", name)));
+			file.Add(indent.FixIndention(4, string.Format("run: {0}", deploymentName)));
 			file.Add(indent.FixIndention(2, "spec:"));
 			file.Add(indent.FixIndention(3, "containers:"));
 			file.Add(indent.FixIndention(3, string.Format("- name: {0}", name)));
