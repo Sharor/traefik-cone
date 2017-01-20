@@ -50,7 +50,7 @@ namespace Tests
 			Assert.Equal(ingress[3], "  name: test-svc");
 			Assert.Equal(ingress[4], "spec:");
 			Assert.Equal(ingress[5], "  ports:");
-			Assert.Equal(ingress[6], "    - port: 80");
+			Assert.Equal(ingress[6], "  - port: 80");
 			Assert.Equal(ingress[7], "    targetPort: 5000");
 			Assert.Equal(ingress[8], "  selector:");
 			Assert.Equal(ingress[9], "    run: test-deploy");

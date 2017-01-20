@@ -71,7 +71,7 @@ namespace TraefikCone
 			SharedMethods indent = new SharedMethods();
 			file.Add("spec:");
 			file.Add(indent.FixIndention(1, "ports:"));
-			file.Add(indent.FixIndention(2, "- port: 80"));
+			file.Add(indent.FixIndention(1, "- port: 80"));
 			file.Add(indent.FixIndention(2, string.Format("targetPort: {0}", targetPort)));
 			file.Add(indent.FixIndention(1, "selector:"));
 			file.Add(indent.FixIndention(2, string.Format("run: {0}", deploymentName)));
