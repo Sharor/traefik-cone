@@ -31,6 +31,27 @@ namespace TraefikCone
 		}
 
 		/// <summary>
+		/// Creates an ingress rule for a given pipeline.
+		/// Choices that have been made implicitly, are that træfik is running, and that the service is tested in 
+		/// context of its correct placement (ie access goes through root on / )
+		/// </summary>
+		/// <param name="path">Path to save file</param>
+		/// <param name="name">Ingress name</param>
+		public List<string> CreateIngress(string name, string host)
+		{
+			#region Conventions for ingress - kept to allow change of convention easily ( has a dependency in kubernetes to the service!)
+			string ingressName = string.Format("{0}-ing", name);	
+			string svcName = string.Format("{0}-svc", name);
+			#endregion
+
+			List<string> ingress = new List<string>();
+			ingress = WriteIngressMetadata(ingress, ingressName);
+			ingress = WriteIngressSpec(ingress, host, svcName);
+
+			return ingress;
+		}
+
+		/// <summary>
 		/// Writes in this format to file: 
 		/// 
 		/// apiVersion: extensions/v1beta1

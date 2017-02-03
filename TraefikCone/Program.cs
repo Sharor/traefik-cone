@@ -27,15 +27,20 @@ namespace ConsoleApplication
 			string port = properties.First(kvp => kvp.Key == "port").Value;
 			string replicas = properties.First(kvp => kvp.Key == "replicas").Value;
 			string image = properties.First(kvp => kvp.Key == "image").Value;
+			string host =  properties.FirstOrDefault(kvp => kvp.Key == "host").Value;
 			Console.WriteLine();
 			Console.WriteLine();
 			#endregion
+
 
 			#region Ingress
 			string ing = string.Format("{0}-ing.yml", name);
 			Console.WriteLine(string.Format("Generating ingress - {0}", ing));
 			IngressGenerator ingress = new IngressGenerator();
-			access.WriteOut(ingress.CreateIngress(name), string.Format("{0}/{1}", path, ing));
+			if(host!=null)
+				access.WriteOut(ingress.CreateIngress(name, host), string.Format("{0}/{1}", path, ing));
+			else
+				access.WriteOut(ingress.CreateIngress(name), string.Format("{0}/{1}", path, ing));
 			Console.WriteLine();
 			#endregion
 
