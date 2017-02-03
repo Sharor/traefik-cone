@@ -1,4 +1,4 @@
-name: test
+name: idun
 port: 5000
-replicas: 3
-image: sharor/hello-world:1.0.0
+replicas: 1
+image: sharor/idun:v1.1.0
